@@ -1,36 +1,28 @@
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        int n = prices.size() ;
-     vector<vector<vector <int>>> dp(n + 1 , vector<vector<int>> (2 , vector<int> (2 , -1) )) ;
-        // int dp[10001][2][2];
-        // for(int i=0; i<10001; i++)
-        //     for(int j=0; j<2; j++)
-        //         for(int k=0; k<2; k++)
-        //             dp[i][j][k] = -1;
-        return maxProfitFromStocks(prices, 0, 1, 1, dp);
+        int dp[100001][2][2];
+        memset(dp, -1, sizeof(dp));
+        return profit(prices, 0, 1, 1, dp);
     }
-    
 private:
-    int maxProfitFromStocks(vector<int>& prices, int currentDay, int canBuy, int count, vector<vector<vector<int>>> &dp){
-                            // int dp[10001][2][2]){
-        if(currentDay >= prices.size() || count == 0)
+    int profit(vector<int>& prices, int CI, int canBuy, int TC, int dp[][2][2]){
+        if(CI >= prices.size() || TC == 0)
             return 0;
-        
         int ans = 0;
-        if(dp[currentDay][canBuy][count] != -1)
-            return dp[currentDay][canBuy][count];
+        if(dp[CI][canBuy][TC] != -1)
+            return dp[CI][canBuy][TC];
         if(canBuy == 1){
-            int idle = maxProfitFromStocks(prices, currentDay + 1, canBuy, count, dp);
-            int buy = - prices[currentDay] + maxProfitFromStocks(prices, currentDay+1, 0, count, dp);
+            int idle = profit(prices, CI + 1, canBuy, TC, dp); 
+            int buy = -prices[CI] + profit(prices, CI + 1, 0, TC, dp);
             ans = max(idle, buy);
         }
         else{
-             int idle = maxProfitFromStocks(prices, currentDay + 1, canBuy, count, dp);
-             int sell = prices[currentDay] + maxProfitFromStocks(prices, currentDay + 1, 1, count-1, dp);
-            ans =  max(idle, sell);
-        }
-        dp[currentDay][canBuy][count] = ans;
-        return dp[currentDay][canBuy][count];
-        }
+            int idle = profit(prices, CI + 1, canBuy, TC, dp);
+            int sell = prices[CI] + profit(prices, CI + 1, 1, TC-1, dp);
+            ans = max(idle, sell);
+        } 
+        dp[CI][canBuy][TC] = ans; 
+        return dp[CI][canBuy][TC];
+    }
 };
