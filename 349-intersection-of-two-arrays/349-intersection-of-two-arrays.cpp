@@ -9,9 +9,9 @@ public:
         vector<int> arr; 
          // traversing through nums2 and matching the value
         for(auto j:nums2){
-            if(m.find(j) != m.end() &&  m[j]){
+            if(m.find(j) != m.end()){
                 arr.push_back(j);
-                 m[j]= false;
+                 m.erase(j);
             }
         }
         
