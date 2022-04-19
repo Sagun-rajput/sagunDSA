@@ -1,25 +1,21 @@
 class Solution {
 public:
     int climbStairs(int n) {
-        unordered_map<int, int>m;
-       return distinctWaysToClimb(0, n, m);
-    } 
-
+        unordered_map<int, int> m;
+        return distinctWays(0, n, m);
+    }
 private:
-    int distinctWaysToClimb(int currentStair, int targetStair, unordered_map<int, int>&m){
-        if(currentStair == targetStair)
-            return 1;
-        if(currentStair > targetStair)
-            return 0;
-        
-        int key = currentStair;
-        if(m.find(key) != m.end())
-            return m[key];
-        
-        int oneStep = distinctWaysToClimb(currentStair + 1, targetStair, m);
-        int twoStep = distinctWaysToClimb(currentStair + 2, targetStair, m);
-        
-        m[key] = oneStep + twoStep;
+    int distinctWays(int CI, int TS, unordered_map<int, int> &m){
+        if(CI == TS) return 1;
+        if(CI > TS) return 0;
+    int key = CI;
+    if(m.find(key) != m.end())
         return m[key];
+        
+    int oneStep = distinctWays(CI+1, TS, m);
+    int twoSteps = distinctWays(CI+2, TS, m);
+    
+    m[key] = oneStep + twoSteps;
+    return m[key];
     }
 };
