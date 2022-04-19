@@ -1,19 +1,16 @@
 class Solution {
 public:
     int fib(int n) {
-        unordered_map<int, int>m;
-        return fibo(n, m);
+        return fibonacci(n);
     }
+    
 private:
-    int fibo(int n, unordered_map<int, int>&m){
-        if(n<=1) return n;
-        int key = n;
-        if(m.find(key) != m.end())
-            return m[key];
+   int fibonacci(int n){
+        if(n == 0 || n == 1)
+            return n;
         
+        int fib = fibonacci(n-1) +  fibonacci(n-2);
         
-       int f = fibo(n-1, m) + fibo(n-2, m);
-        m[key] = f;
-        return m[key];
+        return fib;
     }
 };
