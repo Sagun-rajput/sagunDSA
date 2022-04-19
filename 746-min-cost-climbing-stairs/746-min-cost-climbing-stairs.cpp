@@ -1,24 +1,20 @@
 class Solution {
 public:
     int minCostClimbingStairs(vector<int>& cost) {
-      unordered_map<int, int> m;
-      return min(minCost(cost, 0, m) , minCost(cost, 1, m));
+        unordered_map<int,int> m;
+        return min(minCost(0, cost, m), minCost(1, cost, m));
     }
-    
 private:
-    int minCost(vector<int>& cost,int currentStair,unordered_map<int, int>&m){
-        if(currentStair == cost.size())
-            return 0;
-        if(currentStair > cost.size())
-            return 1001;
+    int minCost(int CI, vector<int>&cost, unordered_map<int,int>&m){
+        if(CI >= cost.size()) return 0;
         
-        int key = currentStair;
+        int key = CI;
         if(m.find(key) != m.end())
             return m[key];
-    int oneStep = cost[currentStair] + minCost(cost, currentStair+1, m);
-    int twoStep = cost[currentStair] +  minCost(cost, currentStair+2, m);
+        int oneStep = cost[CI] + minCost(CI+1, cost, m);
+        int twoSteps = cost[CI] + minCost(CI+2, cost, m);
         
-       m[key] = min(oneStep, twoStep);
-       return m[key];
+        m[key] = min(oneStep, twoSteps);
+        return m[key];
     }
 };
