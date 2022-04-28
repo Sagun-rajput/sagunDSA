@@ -16,7 +16,7 @@ class Solution
     private:
     int maxValue(int CI, int W, int wt[], int val[], int n,unordered_map<string, int>&m){
         if(CI >= n) return 0;
-        
+        if(W == 0) return 0;
         string key = to_string(CI) + "_" + to_string(W);
          if(m.find(key) != m.end())
             return m[key];
